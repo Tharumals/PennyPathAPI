@@ -1,0 +1,15 @@
+# Development: hot reload with source mounted into the container.
+# Run: docker compose -f docker-compose.dev.yml up --build
+services:
+  api:
+    build:
+      context: .
+      target: dev
+    env_file: .env
+    environment:
+      NODE_ENV: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+      - ./drizzle:/app/drizzle

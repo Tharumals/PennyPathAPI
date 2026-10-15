@@ -1,0 +1,10 @@
+# Production-like: builds the final image. Neon and Supabase are remote, so no DB container.
+services:
+  api:
+    build:
+      context: .
+      target: runner
+    env_file: .env
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
