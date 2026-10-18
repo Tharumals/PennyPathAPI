@@ -1,4 +1,4 @@
-# Production-like: builds the final image. Neon and Supabase are remote, so no DB container.
+# Production-like: builds the final image. Neon is remote, so no DB container.
 services:
   api:
     build:

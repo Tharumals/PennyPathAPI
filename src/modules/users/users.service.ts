@@ -1,4 +1,4 @@
-import type { AuthUser } from '../auth/auth.service.js';
+import type { AuthUser } from '../auth/auth.middleware.js';
 import { NotFoundError } from '../../shared/errors/app-error.js';
 import { usersRepository } from './users.repository.js';
 import type { UpdateProfileInput } from './users.schema.js';

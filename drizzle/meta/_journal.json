@@ -8,6 +8,13 @@
       "when": 1791989778530,
       "tag": "0000_flowery_leo",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792254183880,
+      "tag": "0001_graceful_blade",
+      "breakpoints": true
     }
   ]
 }

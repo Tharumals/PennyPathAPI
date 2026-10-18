@@ -1,10 +1,10 @@
 # Node API Starter
 
-Fastify + TypeScript + Drizzle ORM + Neon (Postgres) + Supabase Auth (JWT verification) + Docker.
+Fastify + TypeScript + Drizzle ORM + Neon (Postgres) + Clerk (session token verification) + Docker.
 
 ## Setup
 ```bash
-cp .env.example .env        # fill in DATABASE_URL and SUPABASE_URL
+cp .env.example .env        # fill in DATABASE_URL and the Clerk keys
 npm install
 npm run db:migrate          # applies SQL in ./drizzle to Neon
 npm run dev                 # http://localhost:3000
@@ -37,7 +37,7 @@ npm run db:migrate
 | GET / POST | /api/v1/tasks | Bearer token |
 | GET / PATCH / DELETE | /api/v1/tasks/:id | Bearer token |
 
-Send the Supabase access token: `Authorization: Bearer <access_token>`.
+Send a Clerk session token: `Authorization: Bearer <session_token>`.
 
 ## Adding a module
 Copy `src/modules/tasks/` (routes -> controller -> service -> repository + zod schema),

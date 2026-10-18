@@ -1,4 +1,4 @@
-import type { AuthUser } from '../auth/auth.service.js';
+import type { AuthUser } from '../auth/auth.middleware.js';
 import { NotFoundError } from '../../shared/errors/app-error.js';
 import { usersService } from '../users/users.service.js'; // modules talk via services, not repositories
 import { tasksRepository } from './tasks.repository.js';

@@ -1,3 +1,6 @@
+// Load .env before any other import: some libraries (notably @clerk/fastify)
+// snapshot process.env at module-load time, which runs before later imports.
+import 'dotenv/config';
 import { buildApp } from './app.js';
 import { env } from './config/env.js';
 import { pool } from './db/client.js';

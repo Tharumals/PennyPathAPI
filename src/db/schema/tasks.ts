@@ -5,7 +5,8 @@ export const tasks = pgTable(
   'tasks',
   {
     id: uuid('id').primaryKey().defaultRandom(),
-    userId: uuid('user_id')
+    // Text to match profiles.id (Clerk userIds are opaque strings, not UUIDs).
+    userId: text('user_id')
       .notNull()
       .references(() => profiles.id, { onDelete: 'cascade' }),
     title: text('title').notNull(),

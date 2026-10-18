@@ -1,8 +1,9 @@
-import { pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
-// `id` is the Supabase user id (the `sub` claim in the JWT).
+// `id` is the auth provider's user id (Clerk userId, the `sub` claim in the session token).
+// Stored as text: Clerk ids are opaque strings ("user_..."), not UUIDs.
 export const profiles = pgTable('profiles', {
-  id: uuid('id').primaryKey(),
+  id: text('id').primaryKey(),
   email: text('email'),
   displayName: text('display_name'),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
