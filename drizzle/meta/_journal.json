@@ -15,6 +15,13 @@
       "when": 1792254183880,
       "tag": "0001_graceful_blade",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792334417853,
+      "tag": "0002_expense_tracker",
+      "breakpoints": true
     }
   ]
 }
