@@ -1,25 +1,30 @@
 import { eq } from 'drizzle-orm';
 import { db } from '../../db/client.js';
-import { profiles } from '../../db/schema/index.js';
+import { users } from '../../db/schema/index.js';
+import type { UpdateMeInput } from './users.schema.js';
 
 export const usersRepository = {
-  async findById(id: string) {
-    const [row] = await db.select().from(profiles).where(eq(profiles.id, id));
+  async findByClerkUserId(clerkUserId: string) {
+    const [row] = await db.select().from(users).where(eq(users.clerkUserId, clerkUserId));
     return row ?? null;
   },
 
-  async createIfMissing(data: { id: string; email?: string }) {
-    await db
-      .insert(profiles)
-      .values({ id: data.id, email: data.email ?? null })
-      .onConflictDoNothing();
+  async create(data: { clerkUserId: string; email?: string | null }) {
+    // clerk_user_id is unique; two concurrent first requests may race, so the loser
+    // gets nothing back and re-reads the winner's row instead of surfacing an error.
+    const [row] = await db
+      .insert(users)
+      .values({ clerkUserId: data.clerkUserId, email: data.email ?? null })
+      .onConflictDoNothing()
+      .returning();
+    return row ?? null;
   },
 
-  async update(id: string, data: { displayName: string }) {
+  async update(id: string, data: UpdateMeInput) {
     const [row] = await db
-      .update(profiles)
+      .update(users)
       .set({ ...data, updatedAt: new Date() })
-      .where(eq(profiles.id, id))
+      .where(eq(users.id, id))
       .returning();
     return row ?? null;
   },

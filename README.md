@@ -34,12 +34,23 @@ npm run db:migrate
 |---|---|---|
 | GET | /health, /health/ready | no |
 | GET / PATCH | /api/v1/users/me | Bearer token |
-| GET / POST | /api/v1/tasks | Bearer token |
-| GET / PATCH / DELETE | /api/v1/tasks/:id | Bearer token |
+| GET / POST | /api/v1/categories | Bearer token |
+| GET / PATCH / DELETE | /api/v1/categories/:id | Bearer token |
+| GET / POST | /api/v1/expense-types | Bearer token |
+| GET / PATCH / DELETE | /api/v1/expense-types/:id | Bearer token |
+| GET / POST | /api/v1/expenses | Bearer token |
+| GET / PATCH / DELETE | /api/v1/expenses/:id | Bearer token |
+| GET / POST | /api/v1/expenses/:expenseId/attachments | Bearer token |
+| DELETE | /api/v1/expenses/:expenseId/attachments/:id | Bearer token |
 
 Send a Clerk session token: `Authorization: Bearer <session_token>`.
 
+Categories and expense types marked as system (`user_id IS NULL`) are readable by
+everyone but can only be modified by an admin flow, not through these endpoints.
+Deleting an expense is a soft delete (`deleted_at` is set; the row is kept for audit).
+
 ## Adding a module
-Copy `src/modules/tasks/` (routes -> controller -> service -> repository + zod schema),
+Copy `src/modules/categories/` (routes -> controller -> service -> repository + zod schema),
 add tables in `src/db/schema/`, and register the routes in `src/app.ts`.
-Modules should call each other's *services*, never another module's repository.
+Modules should call each other's *services* via the module's `index.ts`, never another
+module's repository.

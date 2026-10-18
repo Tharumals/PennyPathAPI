@@ -6,8 +6,11 @@ import { clerkPlugin } from '@clerk/fastify';
 import { env } from './config/env.js';
 import { errorHandler } from './shared/errors/error-handler.js';
 import { healthRoutes } from './modules/health/health.routes.js';
-import { usersRoutes } from './modules/users/users.routes.js';
-import { tasksRoutes } from './modules/tasks/tasks.routes.js';
+import { usersRoutes } from './modules/users/index.js';
+import { categoriesRoutes } from './modules/categories/index.js';
+import { expenseTypesRoutes } from './modules/expense-types/index.js';
+import { expensesRoutes } from './modules/expenses/index.js';
+import { expenseAttachmentsRoutes } from './modules/expense-attachments/index.js';
 
 export async function buildApp() {
   const isDev = env.NODE_ENV === 'development';
@@ -43,7 +46,12 @@ export async function buildApp() {
   // Everything else under /api/v1 applies the `authenticate` preHandler per module.
   await app.register(healthRoutes);
   await app.register(usersRoutes, { prefix: '/api/v1/users' });
-  await app.register(tasksRoutes, { prefix: '/api/v1/tasks' });
+  await app.register(categoriesRoutes, { prefix: '/api/v1/categories' });
+  await app.register(expenseTypesRoutes, { prefix: '/api/v1/expense-types' });
+  // Attachments are nested under the expenses resource:
+  // /api/v1/expenses/:expenseId/attachments
+  await app.register(expensesRoutes, { prefix: '/api/v1/expenses' });
+  await app.register(expenseAttachmentsRoutes, { prefix: '/api/v1/expenses' });
 
   return app;
 }

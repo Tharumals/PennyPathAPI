@@ -1,5 +1,3 @@
-export * from './profiles.js';
-export * from './tasks.js';
 export * from './users.js';
 export * from './categories.js';
 export * from './expense-types.js';
